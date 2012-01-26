@@ -40,6 +40,8 @@ alias gspec='guard -c -g rspec'
 alias giterdone='git add . && git commit'
 alias push='git push origin $(current_branch)'
 alias pull='git pull origin $(current_branch)'
+alias gemreset='rvm gemset empty && gem install bundler && bundle'
+alias trash='git stash && git stash drop'
 
 #export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
 export EDITOR=vim
