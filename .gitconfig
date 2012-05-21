@@ -19,6 +19,12 @@
   erdone = push origin
   rmb = !sh -c 'git branch -D $1 && git push origin :$1 && git remote prune origin' -
 
+[branch]
+  autosetupmerge = always
+
+[push]
+  default = tracking
+
 [color]
   branch = auto
   diff = auto

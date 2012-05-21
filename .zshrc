@@ -30,18 +30,19 @@ export QUEUE='*' #csv_importer,pre_calculator,alarms,csv_importer_backlogged,pre
 alias ack=ack-grep
 # alias rs='rails server'
 # alias rc='rails console'
-alias thorshammer='thor import_from_prod:stale --app && rake migrate:all --trace && RAILS_ENV=cucumber rake db:schema:load'
-alias thorsham='thor import_from_prod:stale --app && rake migrate:all --trace'
+alias thorshammer='thor data:import -a -m --trace && RAILS_ENV=cucumber rake db:schema:load'
+alias thorsham='thor data:import -a -m --trace'
 alias cuke=cucumber
 alias spec='rake spec'
 alias wip='cucumber -p wip'
 alias gwip='guard -c -g cucumber'
 alias gspec='guard -c -g rspec'
 alias giterdone='git add . && git commit'
-alias push='git push origin $(current_branch)'
+alias push='git push -u origin $(current_branch)'
 alias pull='git pull origin $(current_branch)'
 alias gemreset='rvm gemset empty && gem install bundler && bundle'
 alias trash='git stash && git stash drop'
+alias resque='rake resque:work'
 
 #export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
 export EDITOR=vim
