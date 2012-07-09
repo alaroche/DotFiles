@@ -17,6 +17,9 @@ set guioptions=em
 " Always show status line
 set laststatus=2
 
+" Set osx true if running in osx
+let osx = substitute(system("uname"), "\n", "", "") == "Darwin"
+
 " Show file name first in status bar
 set statusline=%t
 
@@ -28,7 +31,7 @@ set statusline+=%{fugitive#statusline()}
 
 " My preferred font and size (open source)
 " set gfn=DejaVu\ Sans\ Mono\ 11
-set gfn=Droid\ Sans\ Mono\ 11
+set gfn=Droid\ Sans\ Mono\ 10
 
 " Use 256 color terminal
 " sudo apt-get install ncurses-term
@@ -37,6 +40,10 @@ set term=xterm-256color
 syntax enable
 set background=dark
 
+"Show 80 line mark
+set cc=80
+highlight ColorColumn ctermbg=black
+
 "colorscheme vividchalk
 "colorscheme railscasts
 "colorscheme dark-ruby
@@ -44,6 +51,42 @@ set background=dark
 let g:solarized_termtrans=1
 colorscheme solarized
 
+" Vim Clojure settings
+let vimclojure#HighlightBuiltins=1
+let vimclojure#HighlightContrib=1
+let vimclojure#DynamicHighlighting=1
+let vimclojure#FuzzyIndent=1
+let vimclojure#WantNailgun=1
+
+" Color translation guide
+" solarized    = actual
+" magenta      = purple
+" darkmagenta  = pink
+" blue         = light grey
+" darkblue     = blue
+" red          = orange
+" darkred      = red
+" cyan         = really light grey
+" darkcyan     = light cyan
+" green        = medium grey
+" darkgreen    = yellow
+" yellow       = medium grey
+" darkyellow   = orange
+
+" Make rainbow parens work with solarized terminal vim
+let vimclojure#ParenRainbowColors = {
+      \ '0': 'ctermfg=green        guifg=green',
+      \ '1': 'ctermfg=darkyellow   guifg=darkyellow',
+      \ '2': 'ctermfg=magenta      guifg=magenta',
+      \ '3': 'ctermfg=darkgreen    guifg=darkgreen',
+      \ '4': 'ctermfg=darkcyan     guifg=darkcyan',
+      \ '5': 'ctermfg=darkmagenta  guifg=darkmagenta',
+      \ '6': 'ctermfg=darkblue     guifg=darkblue',
+      \ '7': 'ctermfg=darkred      guifg=darkred',
+      \ '8': 'ctermfg=yellow       guifg=yellow',
+      \ '9': 'ctermfg=cyan         guifg=cyan'
+      \ }
+let vimclojure#ParenRainbow=1
 
 " Remember last 1000 commands
 set history=1000
@@ -66,6 +109,13 @@ set expandtab
 set softtabstop=2
 set autoindent
 
+" Use wildmenu!
+set wildmenu
+set wildmode=list:longest,full
+
+" Enable mouse (useful for scrolling when side by side with browser etc)
+set mouse=a
+
 " Show trailing whitespace
 set list listchars=tab:\ \ ,trail:·
 
@@ -80,17 +130,15 @@ set nofoldenable
 set foldlevel=1
 
 " Ubuntu uses ack-grep instead of ack.
-let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+let g:ackprg="ack -H --nocolor --nogroup --column"
 
-" Command T settings
-set wildignore+=tmp/*,logs/*,.git,coverage/*
-let g:CommandTMaxHeight=15
+set wildignore+=tmp/*,logs/*,.git,coverage/*,.log,*.class,*.pom,*.jar,.gitkeep
 
 " Edit routes
-command! Rroutes :Redit config/routes.rb
-command! RSroutes :RSedit config/routes.rb
-command! RTroutes :RTedit config/routes.rb
-command! RVroutes :RVedit config/routes.rb
+command! Rroutes :R config/routes.rb
+command! RSroutes :RS config/routes.rb
+command! RTroutes :RT config/routes.rb
+command! RVroutes :RV config/routes.rb
 
 " store backups in central location
 set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
@@ -108,6 +156,7 @@ imap jj <Esc>
 
 " Change the leader to ,
 let mapleader=","
+let maplocalleader=","
 
 " Map ; to :
 nnoremap ; :
@@ -130,7 +179,7 @@ nnoremap k gk
 nnoremap <leader>k ddkP
 nnoremap <leader>j ddp
 
-" Move current work left or right
+" Move current word left or right
 nnoremap <leader>h "_yiw?\w\+\_W\+\%#<CR>:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o><C-l>
 nnoremap <leader>l "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o>/\w\+\_W\+<CR><C-l>
 
@@ -149,11 +198,34 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 "noremap   <Right>  <NOP>
 
 " Use global clipboard so you can interact with the world
-set clipboard=unnamed
-"set clipboard=unnamedplus "vim 7.3.74+
+" On Linux you need to install the package 'autocutsel' and add the following
+" to xinit.rc:
+" autocutsel -fork &
+" autocutsel -selection PRIMARY -fork &
+" This fixes some wonky behavior due to X11s remote desktop history and keeps
+" all your clipboards the same across all your apps. See:
+" http://mutelight.org/articles/subtleties-of-the-x-clipboard
+if osx
+  "TODO: figure out how to integrate yank ring with osx.
+else
+  set clipboard=unnamed
+endif
 
 noremap <leader>n :NERDTreeToggle<CR>
+let g:ctrlp_map = '<leader>t'
+let g:ctrlp_working_path_mode = 0
 
+" Change ruby 1.8 hash syntax to 1.9, with confirmation
+map <leader>h :%s/:\(\w*\)\(\s*\)=>\(\s*\)/\1:\3/gc<CR>
+
+" Change ruby 1.8 hash syntax to 1.9, without confirmation
+map <leader>H :%s/:\(\w*\)\(\s*\)=>\(\s*\)/\1:\3/g<CR>
+
+" Remove trailing whitespace
+map <leader>w :%s/\s\+$//g<CR>
+
+" Replace tabs with two spaces
+map <leader>W :retab<CR>
 
 " Align cucumber tables.
 inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
@@ -168,3 +240,15 @@ function! s:align()
     call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
   endif
 endfunction
+
+" Use ctrl h for clojure REPL history in OSX. (Because terminal.app catching
+" ctrl up)
+if osx
+  function! SetupMyVCRepl()
+    imap <buffer> <silent> <C-h> <Plug>ClojureReplUpHistory
+    imap <buffer> <silent> <C-g> <Plug>ClojureReplDownHistory
+  endfunction
+  autocmd FileType * if &ft == "clojure" && exists("b:vimclojure_repl") | call SetupMyVCRepl() | endif
+endif
+
+autocmd FileType clojure setlocal lispwords+=fact,facts,future-facts,future-fact,against-background,POST,GET,PUT,DELETE,HEAD,ANY,context,deconstruct

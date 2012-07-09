@@ -17,7 +17,7 @@ export ZSH_THEME="alaroche"
 # export DISABLE_LS_COLORS="true"
 
 # Uncomment following line if you want to disable autosetting terminal title.
-# export DISABLE_AUTO_TITLE="true"
+export DISABLE_AUTO_TITLE="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
@@ -44,8 +44,70 @@ alias gemreset='rvm gemset empty && gem install bundler && bundle'
 alias trash='git stash && git stash drop'
 alias resque='rake resque:work'
 
-#export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
 export EDITOR=vim
-#export PATH=/home/alaroche/.rvm/gems/ruby-1.8.7-p334@sentalis4rails3/bin:/home/alaroche/.rvm/gems/ruby-1.8.7-p334@global/bin:/home/alaroche/.rvm/rubies/ruby-1.8.7-p334/bin:/home/alaroche/.rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-cd ~/Workingcopies/Sentalis-4
+=======
+
+# Add ~/bin to path
+export PATH=$HOME/bin:$PATH
+
+# Make ZSH vi mode behave more like vim mode
+bindkey -M viins 'jj' vi-cmd-mode
+bindkey -M viins '^?' backward-delete-char
+
+# Control r for search
+bindkey -M viins '^r' history-incremental-search-backward
+bindkey -M vicmd '^r' history-incremental-search-backward
+
+# modify up down behavior to search based on current command
+bindkey '^[[A' history-search-backward
+bindkey '^[[B' history-search-forward
+
+export EDITOR=vim
+
+# System shortcuts
+alias git='nocorrect git'
+alias ll='ls -lth'
+alias lla='ls -ltha'
+
+# Vim Clojure
+export VIMCLOJURE_SERVER_JAR="$HOME/.vim/vim-clojure/server-2.3.1.jar"
+
+# Cassandra
+export CASSANDRA_HOME="$HOME/cassandra"
+export PATH=$PATH:$CASSANDRA_HOME/bin
+
+# On OSX...
+if [ $(uname) = "Darwin" ] ; then
+  # Use mvim in terminal mode with better clipboard support
+  alias vim='mvim -v'
+
+  # Use tmux OSX config
+  alias tmux="TERM=xterm-256color tmux -2 -f $HOME/.tmux.osx.conf"
+
+  # Add sbin to path (for homebrew/rabbitmq)
+  export PATH=$PATH:/usr/local/sbin
+fi
+
+# On Linux
+if [ $(uname) != "Darwin" ] ; then
+
+  # Use tmux linux config
+  alias tmux="TERM=xterm-256color tmux -2 -f $HOME/.tmux.linux.conf"
+fi
+
+# On Ubuntu...
+if [ $(uname -a | grep Ubuntu | wc -l) = 1 ] ; then
+  alias ack='ack-grep'
+fi
+
+# Tmux
+alias topen='tmuxinator open'
+alias tstart='tmuxinator start'
+alias ttest='tmux new-session -s tests -t'
+alias tdm='tstart dm'
+alias ttdm='tmux new-session -s DarkerMatterTests -t DarkerMatter'
+[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
+
+# RVM
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+cd ~/dev/Sentalis-4
