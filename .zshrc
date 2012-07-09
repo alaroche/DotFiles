@@ -28,7 +28,6 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 export QUEUE='*' #csv_importer,pre_calculator,alarms,csv_importer_backlogged,pre_calculator_backlogged,alarm_backlogged,auto_mapper
-alias ack=ack-grep
 # alias rs='rails server'
 # alias rc='rails console'
 alias thorshammer='thor data:import -a -m --trace && RAILS_ENV=cucumber rake db:schema:load'
