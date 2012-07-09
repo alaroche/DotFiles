@@ -21,7 +21,7 @@ export DISABLE_AUTO_TITLE="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git ruby rvm rails3 command-not-found)
+plugins=(git ruby rvm rails3)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -45,7 +45,6 @@ alias trash='git stash && git stash drop'
 alias resque='rake resque:work'
 
 export EDITOR=vim
-=======
 
 # Add ~/bin to path
 export PATH=$HOME/bin:$PATH
