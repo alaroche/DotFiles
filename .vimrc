@@ -31,11 +31,11 @@ set statusline+=%{fugitive#statusline()}
 
 " My preferred font and size (open source)
 " set gfn=DejaVu\ Sans\ Mono\ 11
-set gfn=Droid\ Sans\ Mono\ 10
+set gfn=Monaco\ 18
 
 " Use 256 color terminal
 " sudo apt-get install ncurses-term
-set term=xterm-256color
+"set term=xterm-256color
 
 syntax enable
 set background=dark
@@ -132,7 +132,7 @@ set foldlevel=1
 " Ubuntu uses ack-grep instead of ack.
 let g:ackprg="ack -H --nocolor --nogroup --column"
 
-set wildignore+=tmp/*,logs/*,.git,coverage/*,.log,*.class,*.pom,*.jar,.gitkeep
+set wildignore+=tmp/*,logs/*,.git,*.html,.log,*.class,*.pom,*.jar,.gitkeep
 
 " Edit routes
 command! Rroutes :R config/routes.rb
