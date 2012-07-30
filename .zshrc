@@ -37,12 +37,14 @@ alias spec='rake spec'
 alias wip='cucumber -p wip'
 alias gwip='guard -c -g cucumber'
 alias gspec='guard -c -g rspec'
-alias giterdone='git add . && git commit'
+alias giterdone='git add . && git commit -v'
 alias push='git push -u origin $(current_branch)'
 alias pull='git pull origin $(current_branch)'
 alias gemreset='rvm gemset empty && gem install bundler && bundle'
 alias trash='git stash && git stash drop'
 alias resque='rake resque:unlock_all && rake resque:work --trace'
+alias squash='git reset --soft origin/master && git commit'
+alias pushsquash='git push origin $(current_branch) -f'
 
 #Make git easy
 alias g=git

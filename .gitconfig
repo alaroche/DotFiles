@@ -10,7 +10,7 @@
   co = checkout
   cob = checkout -b
   st = status
-  ci = commit
+  ci = commit -v
   cia = commit -a
   cp = cherry-pick
   br = branch
