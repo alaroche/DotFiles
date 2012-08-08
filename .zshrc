@@ -31,7 +31,6 @@ export QUEUE='*' #csv_importer,pre_calculator,alarms,csv_importer_backlogged,pre
 # alias rs='rails server'
 # alias rc='rails console'
 alias thorshammer='thor data:import -a -m --trace && RAILS_ENV=cucumber rake db:schema:load'
-alias thorsham='thor data:import -a -m --trace'
 alias cuke=cucumber
 alias spec='rake spec'
 alias wip='cucumber -p wip'
@@ -45,6 +44,8 @@ alias trash='git stash && git stash drop'
 alias resque='rake resque:unlock_all && rake resque:work --trace'
 alias squash='git reset --soft origin/master && git commit'
 alias pushsquash='git push origin $(current_branch) -f'
+alias translate='script/i18n_translator.rb'
+alias extract='script/i18n.rb'
 
 #Make git easy
 alias g=git
