@@ -30,7 +30,7 @@ source $ZSH/oh-my-zsh.sh
 export QUEUE='*' #csv_importer,pre_calculator,alarms,csv_importer_backlogged,pre_calculator_backlogged,alarm_backlogged,auto_mapper
 # alias rs='rails server'
 # alias rc='rails console'
-alias thorshammer='thor data:import -a -m --trace && RAILS_ENV=cucumber rake db:schema:load'
+alias thorshammer='thor data:import -a -m && RAILS_ENV=cucumber rake db:schema:load && rs'
 alias cuke=cucumber
 alias spec='rake spec'
 alias wip='cucumber -p wip'
@@ -41,11 +41,14 @@ alias push='git push -u origin $(current_branch)'
 alias pull='git pull origin $(current_branch)'
 alias gemreset='rvm gemset empty && gem install bundler && bundle'
 alias trash='git stash && git stash drop'
-alias resque='rake resque:unlock_all && rake resque:work --trace'
+alias resque='clear && rake resque:unlock_all && rake environment resque:work --trace'
 alias squash='git reset --soft origin/master && git commit'
 alias pushsquash='git push origin $(current_branch) -f'
 alias translate='script/i18n_translator.rb'
 alias extract='script/i18n.rb'
+alias cleanjs='rm public/javascripts/i18n/chef.js public/javascripts/i18n/en.js public/javascripts/i18n/ja.js'
+alias cleanup='gco app/views/accounts && rm config/locales/chef/views/accounts.yml && config/locales/en/views/accounts.yml'
+alias mergemaster='git merge --no-ff origin/master'
 
 #Make git easy
 alias g=git
@@ -143,5 +146,7 @@ alias ttdm='tmux new-session -s DarkerMatterTests -t DarkerMatter'
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
 
 # RVM
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM 
+[[ -s "$HOME/.nvm/nvm.sh" ]] && . "$HOME/.nvm/nvm.sh"  # This loads NVM 
+#PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 cd ~/dev/Sentalis-4
