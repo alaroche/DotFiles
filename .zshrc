@@ -12,7 +12,7 @@ export ZSH_THEME="alanpeabody"
 # export CASE_SENSITIVE="true"
 
 # Comment this out to disable weekly auto-update checks
-# export DISABLE_AUTO_UPDATE="true"
+ export DISABLE_AUTO_UPDATE="true"
 
 # Uncomment following line if you want to disable colors in ls
 # export DISABLE_LS_COLORS="true"
@@ -22,7 +22,7 @@ export DISABLE_AUTO_TITLE="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git ruby rvm rails3)
+plugins=(git ruby rvm rails)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -30,25 +30,30 @@ source $ZSH/oh-my-zsh.sh
 export QUEUE='*' #csv_importer,pre_calculator,alarms,csv_importer_backlogged,pre_calculator_backlogged,alarm_backlogged,auto_mapper
 # alias rs='rails server'
 # alias rc='rails console'
-alias thorshammer='thor data:import -a -m && RAILS_ENV=cucumber rake db:schema:load && rs'
+alias thorshammer='bundle exec thor data:import -a -m && RAILS_ENV=cucumber bundle exec rake db:schema:load && rs'
+alias thorfresh='bundle exec thor data:import -f -m && RAILS_ENV=cucumber bundle exec rake db:schema:load && rs'
 alias cuke=cucumber
-alias spec='rake spec'
-alias wip='cucumber -p wip'
-alias gwip='guard -c -g cucumber'
-alias gspec='guard -c -g rspec'
+alias spec='bundle exec rake spec'
+alias wip='bundle exec cucumber -p wip'
+alias gwip='bundle exec guard -c -g cucumber'
+alias gspec='bundle exec guard -c -g rspec'
 alias giterdone='git add . && git commit -v'
 alias push='git push -u origin $(current_branch)'
 alias pull='git pull origin $(current_branch)'
 alias gemreset='rvm gemset empty && gem install bundler && bundle'
 alias trash='git stash && git stash drop'
 alias resque='clear && rake resque:unlock_all && rake environment resque:work --trace'
+alias sidekiq='clear && bundle exec sidekiq -C config/sidekiq.yml'
 alias squash='git reset --soft origin/master && git commit'
 alias pushsquash='git push origin $(current_branch) -f'
-alias translate='script/i18n_translator.rb'
-alias extract='script/i18n.rb'
+alias translate='bundle exec script/i18n_translator.rb'
+alias extract='bundle exec script/i18n.rb'
 alias cleanjs='rm public/javascripts/i18n/chef.js public/javascripts/i18n/en.js public/javascripts/i18n/ja.js'
 alias cleanup='gco app/views/accounts && rm config/locales/chef/views/accounts.yml && config/locales/en/views/accounts.yml'
 alias mergemaster='git merge --no-ff origin/master'
+alias daq='cd ../DataAcquisition'
+alias zshrc='vi ~/DotFiles/.zshrc'
+alias vimrc='vi ~/DotFiles/.vimrc'
 
 #Make git easy
 alias g=git
@@ -136,6 +141,10 @@ fi
 if [ $(uname -a | grep Ubuntu | wc -l) = 1 ] ; then
   alias ack='ack-grep'
 fi
+
+# Macports
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+export MANPATH=/opt/local/share/man:$MANPATH
 
 # Tmux
 alias topen='tmuxinator open'

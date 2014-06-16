@@ -102,11 +102,17 @@ set smartcase
 " Turn on spell checking (i need it)
 set spell
 
-" Tabs set to always be two spaces
+" Tabs set to always be two spaces (Ruby)
 set tabstop=2
 set shiftwidth=2
-set expandtab
 set softtabstop=2
+
+" Tabs set to always be two spaces (Python)
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+
+set expandtab
 set autoindent
 
 " Use wildmenu!
